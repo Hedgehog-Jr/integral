@@ -1,5 +1,5 @@
 import f_x
-import math
+from lim import get_ab_limit, get_abcd_limit
 
 
 def main():
@@ -10,12 +10,12 @@ def main():
     number = -1
     while (number < 1) or (number > 35):
         number = int(input("Введите номер функции: "))
-    a = input_number("a")
-    b = input_number("b")
-    if number > 28:
-        c = input_number("c")
-        d = input_number("d")
-    print("\nI = ", trapeze(f[number], a, b))
+    number -= 1
+    if number < 28:
+        a, b = get_ab_limit(number)
+        print("Метод трапеции: ", trapeze(f[number], a, b))
+    else:
+        a, b, c, d = get_abcd_limit(number)
 
 
 def trapeze(f, a, b):
@@ -29,15 +29,6 @@ def trapeze(f, a, b):
     integral *= h
     return integral
 
-
-def input_number(letter):
-    string = letter + " = "
-    x = (input(string))
-    if x == "pi":
-        x = math.pi
-    else:
-        x = float(x)
-    return x
 
 main()
 

@@ -1,5 +1,6 @@
 import f_x
 from lim import get_ab_limit, get_abcd_limit
+import math
 
 
 def main():
@@ -13,21 +14,33 @@ def main():
     number -= 1
     if number < 28:
         a, b = get_ab_limit(number)
-        print("Метод трапеции: ", trapeze(f[number], a, b))
+        print("Метод трапеции при 3 = 1e-4: ", trapeze(f[number], a, b, 1e-4))
+        print("Метод трапеции при 3 = 1e-5: ", trapeze(f[number], a, b, 1e-5))
     else:
         a, b, c, d = get_abcd_limit(number)
 
 
-def trapeze(f, a, b):
-    x = a
-    n = 1000
-    h = (b - a) / n
-    integral = (f(a) + f(b)) / 2
-    for i in range(1, n - 1):
-        x += h
-        integral += f(x)
-    integral *= h
-    return integral
+def trapeze(f, a, b, e):
+    i_h = 5
+    i_h2 = 1
+    n = 2
+    while math.fabs(i_h - i_h2) > 3 * e:
+        x = a
+        h = (b - a) / n
+        i_h = (f(a) + f(b)) / 2
+        for i in range(1, n):
+            x += h
+            i_h += f(x)
+        i_h *= h
+        x = a
+        n *= 2
+        h2 = (b - a) / n
+        i_h2 = (f(a) + f(b)) / 2
+        for i in range(1, n):
+            x += h2
+            i_h2 += f(x)
+        i_h2 *= h2
+    return i_h2
 
 
 main()

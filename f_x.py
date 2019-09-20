@@ -110,7 +110,10 @@ def f27(x):
 
 
 def f28(x):
-    exit(28)
+    k = 0
+    a = 0.6 + 0.07 * k
+    b = 2 + 0.25 * k
+    return math.exp(a * (x - 1)) / (pow(x, 0.5) * (x + b))
 
 
 def f29(x, y):
@@ -134,9 +137,16 @@ def f33(x, y):
 
 
 def f34(x, y):
-    exit(34)
+    k = 0
+    a = 0.5 + 0.1 * k
+    b = 0.5 + 0.1 * k
+    return math.sin(pow(x, 2) + pow(y, 2)) / (1 + a * x + b * y)
 
 
 def f35(x, y):
-    exit(35)
+    m = 5
+    k = 1
+    a = 0.2 * m
+    b = 0.1 * k
+    return math.exp((-a) * (x + y)) / (1 + b * (x + y))
 

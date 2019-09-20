@@ -1,6 +1,6 @@
 import f_x
 from lim import get_ab_limit, get_abcd_limit
-from integral import trapeze
+from integral import trapeze, simpson
 
 
 def main():
@@ -16,6 +16,8 @@ def main():
         a, b = get_ab_limit(number)
         print("Метод трапеции при 3 = 1e-4: ", trapeze(f[number], a, b, 1e-4))
         print("Метод трапеции при 3 = 1e-5: ", trapeze(f[number], a, b, 1e-5))
+        print("Метод Симпсона при 3 = 1e-4: ", simpson(f[number], a, b, 1e-4))
+        print("Метод Симпсона при 3 = 1e-5: ", simpson(f[number], a, b, 1e-5))
     else:
         a, b, c, d = get_abcd_limit(number)
 

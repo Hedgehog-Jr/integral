@@ -1,11 +1,11 @@
 import math
 
 
-def trapeze(f, a, b, e):
-    i_h = 5
-    i_h2 = 1
+def trapeze(f, a, b, eps):
+    i_h = 3 * eps
+    i_h2 = eps
     n = 2
-    while math.fabs(i_h - i_h2) > 3 * e:
+    while math.fabs(i_h - i_h2) > 3 * eps:
         x = a
         h = (b - a) / n
         i_h = (f(a) + f(b)) / 2
@@ -24,11 +24,11 @@ def trapeze(f, a, b, e):
     return i_h2
 
 
-def simpson(f, a, b, e):
-    i_h = 5
-    i_h2 = 1
+def simpson(f, a, b, eps):
+    i_h = 3 * eps
+    i_h2 = eps
     n = 1
-    while math.fabs(i_h - i_h2) > 15 * e:
+    while math.fabs(i_h - i_h2) > 15 * eps:
         x = a
         h = (b - a) / (2 * n)
         i_h = f(x)
@@ -55,3 +55,24 @@ def simpson(f, a, b, e):
         i_h2 += f(x)
         i_h2 *= h2 / 3
     return i_h2
+
+
+def cubature(f, a, b, c, d):
+    n = 1000
+    m = 1000
+    hx = (b - a) / (2 * n)
+    hy = (d - c) / (2 * m)
+    integral = 0
+    for i in range(0, n):
+        for j in range(0, m):
+            x2 = a + (2 * i) * hx
+            y2 = c + (2 * j) * hy
+            x2_1 = x2 + hx
+            x2_2 = x2_1 + hx
+            y2_1 = y2 + hy
+            y2_2 = y2_1 + hy
+            integral += f(x2, y2) + 4 * f(x2_1, y2) + f(x2_2, y2) + 4 * f(x2, y2_1) + 16 * f(x2_1, y2_1)
+            integral += 4 * f(x2_2, y2_1) + f(x2, y2_2) + 4 * f(x2_1, y2_2) + f(x2_2, y2_2)
+    integral *= hx * hy / 9
+    return integral
+

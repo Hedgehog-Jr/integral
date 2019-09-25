@@ -1,6 +1,6 @@
 import f_x
 from lim import get_ab_limit, get_abcd_limit
-from integral import trapeze, simpson
+from integral import trapeze, simpson, cubature
 
 
 def main():
@@ -20,6 +20,7 @@ def main():
         print("Метод Симпсона при 3 = 1e-5: ", simpson(f[number], a, b, 1e-5))
     else:
         a, b, c, d = get_abcd_limit(number)
+        print("Кубатурная формула Симпсона: ", cubature(f[number], a, b, c, d))
 
 
 main()

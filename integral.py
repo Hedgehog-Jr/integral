@@ -1,4 +1,5 @@
 import math
+import copy
 
 
 def trapeze(f, a, b, eps):
@@ -57,12 +58,12 @@ def simpson(f, a, b, eps):
     return i_h2
 
 
-def cubature(f, a, b, c, d):
-    n = 1000
-    m = 1000
+def cubature(f, a, b, c, d, eps):
+    n = 2
+    m = 2
     hx = (b - a) / (2 * n)
     hy = (d - c) / (2 * m)
-    integral = 0
+    integral1 = 0
     for i in range(0, n):
         for j in range(0, m):
             x2 = a + (2 * i) * hx
@@ -71,8 +72,27 @@ def cubature(f, a, b, c, d):
             x2_2 = x2_1 + hx
             y2_1 = y2 + hy
             y2_2 = y2_1 + hy
-            integral += f(x2, y2) + 4 * f(x2_1, y2) + f(x2_2, y2) + 4 * f(x2, y2_1) + 16 * f(x2_1, y2_1)
-            integral += 4 * f(x2_2, y2_1) + f(x2, y2_2) + 4 * f(x2_1, y2_2) + f(x2_2, y2_2)
-    integral *= hx * hy / 9
-    return integral
+            integral1 += f(x2, y2) + 4 * f(x2_1, y2) + f(x2_2, y2) + 4 * f(x2, y2_1) + 16 * f(x2_1, y2_1)
+            integral1 += 4 * f(x2_2, y2_1) + f(x2, y2_2) + 4 * f(x2_1, y2_2) + f(x2_2, y2_2)
+    integral1 *= hx * hy / 9
+    integral2 = 100 * integral1
+    while math.fabs(integral1 - integral2) > 15 * eps:
+        integral1 = copy.deepcopy(integral2)
+        integral2 = 0
+        n *= 2
+        m *= 2
+        hx = (b - a) / (2 * n)
+        hy = (d - c) / (2 * m)
+        for i in range(0, n):
+            for j in range(0, m):
+                x2 = a + (2 * i) * hx
+                y2 = c + (2 * j) * hy
+                x2_1 = x2 + hx
+                x2_2 = x2_1 + hx
+                y2_1 = y2 + hy
+                y2_2 = y2_1 + hy
+                integral2 += f(x2, y2) + 4 * f(x2_1, y2) + f(x2_2, y2) + 4 * f(x2, y2_1) + 16 * f(x2_1, y2_1)
+                integral2 += 4 * f(x2_2, y2_1) + f(x2, y2_2) + 4 * f(x2_1, y2_2) + f(x2_2, y2_2)
+        integral2 *= hx * hy / 9
+    return integral1
 

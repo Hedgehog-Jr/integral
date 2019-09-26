@@ -14,13 +14,13 @@ def main():
     number -= 1
     if number < 28:
         a, b = get_ab_limit(number)
-        print("Метод трапеции при 3 = 1e-4: ", trapeze(f[number], a, b, 1e-4))
-        print("Метод трапеции при 3 = 1e-5: ", trapeze(f[number], a, b, 1e-5))
-        print("Метод Симпсона при 3 = 1e-4: ", simpson(f[number], a, b, 1e-4))
-        print("Метод Симпсона при 3 = 1e-5: ", simpson(f[number], a, b, 1e-5))
+        print("Метод трапеции при eps = 1e-4: ", trapeze(f[number], a, b, 1e-4))
+        print("Метод трапеции при eps = 1e-5: ", trapeze(f[number], a, b, 1e-5))
+        print("Метод Симпсона при eps = 1e-4: ", simpson(f[number], a, b, 1e-4))
+        print("Метод Симпсона при eps = 1e-5: ", simpson(f[number], a, b, 1e-5))
     else:
         a, b, c, d = get_abcd_limit(number)
-        print("Кубатурная формула Симпсона: ", cubature(f[number], a, b, c, d))
+        print("Кубатурная формула Симпсона при eps = 1e-10:", cubature(f[number], a, b, c, d, 1e-10))
 
 
 main()
